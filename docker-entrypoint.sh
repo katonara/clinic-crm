@@ -12,8 +12,9 @@ if [ -z "$APP_KEY" ] || [ "$APP_KEY" = "" ]; then
     php artisan key:generate --force
 fi
 
-# Run migrations
-php artisan migrate --force --seed
+# Run migrations (seed only on fresh)
+php artisan migrate --force || true
+php artisan db:seed --force || true
 
 # Cache after migrations
 php artisan config:cache
