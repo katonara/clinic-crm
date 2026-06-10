@@ -17,6 +17,9 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
+# Create empty .env so artisan commands work
+RUN touch .env
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
