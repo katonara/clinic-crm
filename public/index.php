@@ -29,15 +29,7 @@ try {
     exit;
 }
 
-try {
-    /** @var Application $app */
-    $app = require_once __DIR__.'/../bootstrap/app.php';
-    $app->handleRequest($request);
-} catch (\Throwable $e) {
-    if (str_contains($e->getMessage(), 'Invalid URI')) {
-        http_response_code(400);
-        echo 'Bad Request';
-        exit;
-    }
-    throw $e;
-}
+/** @var Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+$app->handleRequest($request);
