@@ -22,10 +22,18 @@ require __DIR__.'/../vendor/autoload.php';
 
 // Bootstrap Laravel and handle the request...
 try {
+    $request = Request::capture();
+} catch (\Throwable $e) {
+    http_response_code(400);
+    echo 'Bad Request';
+    exit;
+}
+
+try {
     /** @var Application $app */
     $app = require_once __DIR__.'/../bootstrap/app.php';
-    $app->handleRequest(Request::capture());
-} catch (\InvalidArgumentException $e) {
+    $app->handleRequest($request);
+} catch (\Throwable $e) {
     if (str_contains($e->getMessage(), 'Invalid URI')) {
         http_response_code(400);
         echo 'Bad Request';
